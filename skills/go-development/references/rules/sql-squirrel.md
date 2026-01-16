@@ -19,12 +19,12 @@ import (
 
 func NewStore(db *sqlx.DB) *Store {
 	return &Store{
-		db:      db,
+		db: db,
 	}
 }
 
 type Store struct {
-	db      *sqlx.DB
+	db *sqlx.DB
 }
 
 ```
