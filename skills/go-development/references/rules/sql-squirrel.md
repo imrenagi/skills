@@ -17,13 +17,13 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func NewStore(db *sqlx.DB) *Store {
-	return &Store{
+func NewOrderRepository(db *sqlx.DB) *OrderRepository {
+	return &OrderRepository{
 		db: db,
 	}
 }
 
-type Store struct {
+type OrderRepository struct {
 	db *sqlx.DB
 }
 
@@ -38,7 +38,7 @@ type Order struct {
     Name string
 }
 
-func (s *Store) Create(ctx context.Context, order *Order, opts ...Option) error {
+func (s *OrderRepository) Create(ctx context.Context, order *Order, opts ...Option) error {
 	options := &Options{}
 	for _, o := range opts {
 		o(options)
