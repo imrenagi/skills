@@ -64,9 +64,13 @@ func NewServer(ctx context.Context, cfg *config.Config) *Server {
 ### gRPC Server Initialization
 
 ```go
+import (
+    "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+)
+
 func (s *Server) newGRPCServer(ctx context.Context) *grpc.Server {
     opts := []grpc.ServerOption{
-        grpc.StatsHandler(otelgrpc.NewServerHandler()),
+        grpc.StatsHandler(otelgrpc.NewServerHandler()), 
         grpc.ChainUnaryInterceptor(
             s.UnaryServerAppLoggerInterceptor(),
             s.UnaryServerGRPCLoggerInterceptor(),
