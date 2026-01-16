@@ -11,18 +11,22 @@ tags: tag1, tag2
 
 Brief explanation of the rule and why it matters. This should be clear and concise, explaining the performance implications.
 
+**Directory structure (optional)**
+
+Add how the directory/files should be structured.
+
 **Incorrect (description of what's wrong):**
 
 ```typescript
 // Bad code example here
-const bad = example()
+const bad = example();
 ```
 
 **Correct (description of what's right):**
 
 ```typescript
 // Good code example here
-const good = example()
+const good = example();
 ```
 
 Reference: [Link to documentation or resource](https://example.com)

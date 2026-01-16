@@ -9,11 +9,25 @@ tags: sql, sqlx, postgres
 
 **Impact: MEDIUM**
 
-- Use `github.com/jmoiron/sqlx` for database interactions when you need raw SQL control with struct mapping.
-- Implement client initialization in `initernal/pg/db.go`.
-- Always enable opentelemetry sql instrumentation.
+- Use `github.com/jmoiron/sqlx` for SQL database interactions when you need raw SQL control with struct mapping.
+- Implement client initialization for each database in its own package in `internal` package.
+
+**Directory Structure:**
+
+```
+.
+├── internal
+    └── pg
+        └── db.go
+		└── config.go
+    └── sql
+        └── db.go
+		└── config.go
+```
 
 **Client initialization:**
+
+- Always enable OpenTelemetry instrumentation for the client initialization.
 
 ```go
 package pg
@@ -25,7 +39,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.10.0"
 )
 
-func New(c config.SQL) *sqlx.DB {
+func New(c Config) *sqlx.DB {
 	db, err := otelsqlx.Open("postgres", c.DataSourceName(),
 		otelsql.WithAttributes(semconv.DBSystemPostgreSQL))
 	if err != nil {

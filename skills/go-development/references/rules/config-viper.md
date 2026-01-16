@@ -46,6 +46,8 @@ func LoadFromEnv() *Config {
 
 **Correct (Viper with struct tags):**
 
+Each configuration struct should be in its own package. The `config.go` should be the configuration container.
+
 ```go
 import (
     "strings"
@@ -54,12 +56,8 @@ import (
 
 // Use struct tags for mapping
 type Config struct {
-    Server ServerConfig `yaml:"server"`
-    DB     SQL          `yaml:"db"`
-}
-
-type ServerConfig struct {
-    Port int `yaml:"port"`
+    DB     pg.Config    `yaml:"db"`
+    Redis  redis.Config `yaml:"redis"`
 }
 
 func Load(configFile string) (*Config, error) {

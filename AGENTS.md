@@ -10,14 +10,13 @@ A collection of skills for Claude.ai and Claude Code for working as Imre Nagi. S
 
 ### Directory Structure
 
-```
 skills/
   {skill-name}/           # kebab-case directory name
     SKILL.md              # Required: skill definition
+    resources/            # Required: resources which define the rules and patterns
     scripts/              # Required: executable scripts
       {script-name}.sh    # Bash scripts (preferred)
   {skill-name}.zip        # Required: packaged for distribution
-```
 
 ### Naming Conventions
 
