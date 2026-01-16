@@ -1,0 +1,3 @@
+[submodule ".agent-vendor/google.aip.dev"]
+	path = .agent-vendor/google.aip.dev
+	url = git@github.com:aip-dev/google.aip.dev.git
