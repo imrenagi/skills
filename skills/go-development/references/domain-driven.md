@@ -55,6 +55,46 @@ func (o *Order) AddItem(item Item) error {
 }
 ```
 
+### Define Domain Enums
+
+Go does not have a native `enum` type. To implement enums in the domain layer, use a custom defined type based on `int` combined with `const` and `iota`. This provides type safety and allows validation behavior directly on the enum type.
+
+```go
+type OrderStatus int
+
+const (
+    OrderStatusUnknown OrderStatus = iota // Zero-value catches uninitialized states
+    OrderStatusPending
+    OrderStatusProcessing
+    OrderStatusCompleted
+    OrderStatusCancelled
+)
+
+// IsValid checks if the enum value is within the allowed set
+func (s OrderStatus) IsValid() bool {
+    return s > OrderStatusUnknown && s <= OrderStatusCancelled
+}
+
+// ToProto converts the domain enum to the generated gRPC status enum
+func (s OrderStatus) ToProto() pb.OrderStatus {
+    switch s {
+    case OrderStatusPending:
+        return pb.OrderStatus_ORDER_STATUS_PENDING
+    // ... other cases
+    default:
+        return pb.OrderStatus_ORDER_STATUS_UNSPECIFIED
+    }
+}
+```
+
+**Key Practices:**
+
+- **Use `iota` for Integers**: Prefer integer-based enums with `iota` for internal logic as they are more efficient.
+- **Zero-Value is Unknown**: Always define the `0` value as `Unknown` or `Unspecified`.
+- **Encapsulate Validation**: Use an `IsValid()` method before performing logic that depends on the enum value.
+- **Avoid Naked Strings**: Never use raw strings (e.g., `"pending"`) for status or types in your business logic.
+- **Favor gRPC Conversion**: Implement `ToProto`/`FromProto` methods to maintain type safety across the API boundary.
+
 ### Best Practices
 
 1.  **Selective Encapsulation**: Export fields that are primarily data containers for easy persistence mapping. Use private fields for sensitive internal state or state that requires complex validation during transitions.
