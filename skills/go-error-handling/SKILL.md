@@ -1,5 +1,5 @@
 ---
-name: Go Error Handling
+name: go-error-handling
 description: Best practices for error handling in Go applications, including error wrapping, domain errors, sentinel vs typed errors, and gRPC error mapping.
 ---
 
